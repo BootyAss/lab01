@@ -4,59 +4,117 @@
 
 ## Tasks
 
-- [ ] 1. Ознакомиться со ссылками учебного материала
-- [ ] 2. Выполнить инструкцию учебного материала
-- [ ] 3. Составить отчет и отправить ссылку личным сообщением в **Slack**
+- [x] 1. Ознакомиться со ссылками учебного материала
+- [x] 2. Выполнить инструкцию учебного материала
+- [x] 3. Составить отчет и отправить ссылку личным сообщением в **Slack**
 
 ## Tutorial
 
 ```bash
-$ export GITHUB_USERNAME=<имя_пользователя>
-$ export GIST_TOKEN=<сохраненный_токен>
-$ alias edit=<nano|vi|vim|subl>
+# Присваиваем переменной GITHUB_USERNAME наше имя пользователя на Github
+$ export GITHUB_USERNAME=BootyAss
+
+# Вводим для переменной GIST_TOKEN созданный токен для работы с Gist'ами
+$ export GIST_TOKEN=553be44dcec73f2d33a31261d6648655578cece9
+
+# Биндим команду edit с вызовом редактора Atom
+$ alias edit=atom #
 ```
 
 ```ShellSession
+# Создаем директорию с нашим именем пользователя и со вложенной папкой workspace
 $ mkdir -p ${GITHUB_USERNAME}/workspace
+
+# Переходим в созданный каталог
 $ cd ${GITHUB_USERNAME}/workspace
+
+# Выводим полный путь до текущей директории
 $ pwd
+/home/momhustler/Bootyass/workspace
+
+# Возвращаемся наверх(в предыдущую папку)
 $ cd ..
+
+
+# Выводим полный путь до текущей директории
 $ pwd
+/home/momhustler/Bootyass
+
 ```
 
 ```ShellSession
+# Создаем каталоги, используя флаг -p
 $ mkdir -p workspace/tasks/
 $ mkdir -p workspace/projects/
 $ mkdir -p workspace/reports/
+
+# Переходим в главный каталог
 $ cd workspace
 ```
 
 ```ShellSession
 # Debian
+# Linux Manjaro KDE
+
+# Скачиваем архив с последней версией nodejs 
 $ wget https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.xz
+
+# Распаковываем в текущую директорию (создается каталог с именем файла)
 $ tar -xf node-v6.11.5-linux-x64.tar.xz
+
+# Удаляем архив
 $ rm -rf node-v6.11.5-linux-x64.tar.xz
+
+# Перемещаем каталог с nodejs в каталог node (переименовываем)
 $ mv node-v6.11.5-linux-x64 node
 ```
 
 ```ShellSession
 $ ls node/bin
+node npm
+
+# Выводим список директорий, где терминал ищет исполняемые файлы
 $ echo ${PATH}
-$ export PATH=${PATH}:`pwd`/node/bin
+/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+
+# Добавляем к переменной PATH путь до бинарных файлов nodejs
+$ export PATH=${PATH}:`pwd`/node/bin1
+
+# Снова выводим его и видим, что наша директория успешно добавлена
 $ echo ${PATH}
+/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/momhustler/node/bin1
+
+# Создаем директорию scripts
 $ mkdir scripts
+
+# Создаем в этой директории файл activate
 $ cat > scripts/activate<<EOF
 export PATH=\${PATH}:`pwd`/node/bin
 EOF
+
+# При помощи команды source содержимое файла будет исполнено как набор команд
 $ source scripts/activate
 ```
 
 ```ShellSession
+# Устанавливаем gistup при помощи npm
 $ npm install -g gistup
+/home/momhustler/Bootyass/workspace/node/bin/gistup -> /home/momhustler/Bootyass/workspace/node/lib/node_modules/gistup/bin/gistup
+/home/momhustler/Bootyass/workspace/node/bin/gistup-open -> /home/momhustler/Bootyass/workspace/node/lib/node_modules/gistup/bin/gistup-open
+/home/momhustler/Bootyass/workspace/node/bin/gistup-rename -> /home/momhustler/Bootyass/workspace/node/lib/node_modules/gistup/bin/gistup-rename
+/home/momhustler/Bootyass/workspace/node/lib
+└─┬ gistup@0.1.3 
+  ├─┬ optimist@0.3.7 
+  │ └── wordwrap@0.0.3 
+  └── queue-async@1.2.1 
+
+# Показываем список файлов директории node/bin и убеждаемся, что все установилось корректно
 $ ls node/bin
+gistup  gistup-open  gistup-rename  node  npm
 ```
 
 ```ShellSession
+# Создаем файл .gistup.json, где будет находится наш gist token
 $ cat > ~/.gistup.json <<EOF
 {
   "token": "${GIST_TOKEN}"
@@ -67,12 +125,25 @@ EOF
 ## Report
 
 ```ShellSession
+# Добавляем переменную с номером л/р
 $ export LAB_NUMBER=01
+
+# Клонируем репозиторий с л/р в директорию tasks/lab01
 $ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
+
+# Создаем директорию для хранения отчетов
 $ mkdir reports/lab${LAB_NUMBER}
+
+# Копируем README.md в директорию с отчетами и переименовываем его
 $ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
+
+# Переходим в директорию с REPORT.md
 $ cd reports/lab${LAB_NUMBER}
+
+# Редактируем его
 $ edit REPORT.md
+
+# Создаем gist с сообщением 'lab01'
 $ gistup -m "lab${LAB_NUMBER}" # enter: yes↵
 ```
 
